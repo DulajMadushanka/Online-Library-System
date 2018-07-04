@@ -1,0 +1,8 @@
+.list-group-item:hover{
+    background-color: lightblue;
+}
+
+.list-group-item{
+    max-width: 800pt;
+    max-height: 40pt;
+}

@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>CrudAngular</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css"/>
+ 
+  <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+	<link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+		
+
+
+
+
+</head>
+<body class="hold-transition skin-blue sidebar-mini">
+  <app-root></app-root>
+
+ <!--stock update script start !-->
+ <script>
+  function addRow() {
+    var counter = 0;
+    var newRow = $("<tr>");
+        var cols = "";
+
+        cols += '<td><input type="text" class="form-control" name="name' + counter + '"/></td>';
+        cols += '<td><input type="number" class="form-control" name="mail' + counter + '"/></td>';
+        cols += '<td><input type="number" class="form-control" name="phone' + counter + '"/></td>';
+
+        cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+        newRow.append(cols);
+        $("table.order-list").append(newRow);
+        counter++;
+
+    $("table.order-list").on("click", ".ibtnDel", function (event) {
+        $(this).closest("tr").remove();
+        counter -= 1
+    });
+  }
+
+  function getSum() {
+    var mytable = document.getElementById("mytable");
+    var avgVal=0, sumQVal=0, sumPVal=0;
+    for(var i=1; i<mytable.rows.length; i++){
+      sumQVal = sumQVal + parseInt(mytable.rows[i].cells[1].children[0].value);
+      sumPVal = sumPVal + parseInt(mytable.rows[i].cells[2].children[0].value);
+    }
+    avgVal = (sumPVal / sumQVal);
+    console.log(avgVal);
+    console.log(sumQVal);
+    document.getElementById("unitCost").value = avgVal;
+    document.getElementById("quantity").value = sumQVal;
+
+  }
+
+
+</script>
+ <!--stock update script end !-->
+</body>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.js"></script>
+</html>

@@ -1,0 +1,30 @@
+.btn-success {
+    
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+#addRow {
+    
+    border: none;
+    color: white;
+    padding: 12px 16px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.list-group-item:hover{
+    background-color: lightblue;
+   
+}
+
+.list-group-item{
+    max-width: 800pt;
+    max-height: 40pt;
+}
+div.a {
+    border: 1px solid black;
+    margin: 20px ;
+    
+}

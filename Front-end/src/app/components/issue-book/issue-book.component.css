@@ -1,0 +1,34 @@
+
+tbody {
+    font-size: 125%;
+    font-family: Times, Times New Roman, Georgia, serif;
+  }
+  th {
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-size:100%;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: #7cc7f3;
+  }
+  th,td {
+    vertical-align: middle;
+  }
+  
+  .modal-header {
+    background-color: #5d809b;
+    color: white;
+    text-align: center;
+  }
+  
+  #modId {
+    font-family: 'Times New Roman', Times, serif;
+    text-align: center;
+    font-size: 150%;
+  }
+  
+  
+  .modal-body {
+    background-color: #c8d2da;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  }
+  

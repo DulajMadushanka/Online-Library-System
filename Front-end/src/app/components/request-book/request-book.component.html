@@ -1,0 +1,213 @@
+<hr>
+<div class="container">
+  <h1 style="font-size: 40pt;text-align: center;color: black"><b>Request Book Details</b></h1>
+  <div *ngFor="let alert of alerts">
+            <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </div>
+    
+    <div class="row" >
+          <div class="col-sm-4"></div>
+          <div class="input-group col-sm-4">
+                <input type="text" class="form-control" id="searchTextId" name="searchText" placeholder="Search By Name">
+                <span class="input-group-addon"><i class="fas fa-search"></i></span>
+          </div>
+    </div>
+      <hr>
+
+      <div class="row">
+            <div class="col-sm">
+            <table class="table table-hover table-striped table-condensed  table-sm" id="mytable">
+                  <thead class="">
+                  <tr style="background-color: #85B3E9">
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Chategory</th>
+                    <th>Author</th>
+                    <th>Edition</th>
+                    <th>Note</th>
+                    <th>Action</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor = "let req of RequestList">
+                      <td>{{req.s_name}}</td>
+                      <td>{{req.email}}</td>
+                      <td>{{req.book_title}}</td>
+                      <td>{{req.author}}</td>
+                      <td>{{req.edition}}</td>
+                      <td>{{req.note}}</td>
+                     
+                        <button class='btn btn-danger' (click)="deleteRequest(req._id); deleteRequestAlert()">
+                        <i class='fa fa-trash fa-lg'></i>Delete
+                        </button>
+          
+                        <button class='btn btn-success' id="mybutton" (click)="openEditModal(template1)" (click)="showEditForm(req)">
+                        <i class="fas fa-align-justify" ></i>View
+                        </button>
+                    </tr>
+                  </tbody>
+
+            </table>
+            
+            </div>
+      </div>
+      
+</div>
+<!--add request book-->
+<ng-template #template>
+  <div style="width: 1200px;margin-left: -199px">
+  <div class="row">
+    <div class="modal-header col-sm">
+      <div class="col-sm-2" >
+      </div>
+      <div class="col-sm-8">
+          <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Add Request Book Details</label></h4>
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-window-close fa-2x"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+      <!--modal body-->
+      <div class="row" >
+      <div class="modal-body" >
+            <form #itemForm = "ngForm" (ngSubmit) = "addRequest(itemForm)" *ngIf="!toggleForm"  class="form-horizontal">
+                  <input type="hidden" name="_id">
+
+                  <div class="form-group row">
+                        <label class="col-sm-3 control-label" style="margin-left: -120px">Student Name :</label>
+                        <div class="col-sm-9">
+                              <input class="form-control" type="text" name="s_name" ngModel required>
+                        </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Email :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="email" ngModel required>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Chategory :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="book_title" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Author :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="author" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Edition :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="edition" ngModel>
+                    </div>
+                   </div>
+                   <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Note :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="note" ngModel>
+                    </div>
+                   </div>
+            
+                  <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                              
+                              <button type="submit" class="btn btn-primary" (click)="addRequestAlert()">Submit</button>
+                              <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>&nbsp;
+                              <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal">Reset</button>
+                        </div>
+                  </div>
+            </form>
+      </div>
+    </div>
+    </div>
+  
+</ng-template>
+<!--update request book-->
+<ng-template #template1>
+    <div style="width: 1200px;margin-left: -199px">
+    <div class="row">
+      <div class="modal-header col-sm">
+        <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-8">
+            <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Edit Request Book Details</label></h4>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-window-close fa-2x"></i>
+          </button>
+        </div>
+  
+      </div>
+    </div>
+        
+        <div class="row" >
+        <div class="modal-body" >
+            
+              <form #updateForm = "ngForm" (ngSubmit) = "updateRequest(updateForm)" class="form-horizontal" >
+                    <input type="hidden" name="_id">
+  
+                    <div class="form-group row">
+                          <label class="col-sm-3 control-label" style="margin-left: -120px">Student Name :</label>
+                          <div class="col-sm-9">
+                                <input class="form-control" type="text" name="s_name"  [ngModel]="selectedRequest.s_name" required>
+                          </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Email :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="email"  [ngModel]="selectedRequest.email" required>
+                      </div>
+                    </div>
+                   
+                   
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Chategory :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="book_title" [ngModel]="selectedRequest.book_title">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Author :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="author" [ngModel]="selectedRequest.author">
+                      </div>
+                     </div>
+
+                     <div class="form-group row">
+                        <label class="col-sm-3 control-label" style="margin-left: -120px">Edition :</label>
+                        <div class="col-sm-9">
+                              <input class="form-control" type="text" name="edition" [ngModel]="selectedRequest.edition">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Note :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="note" [ngModel]="selectedRequest.note">
+                      </div>
+                     </div>
+                  
+                    <div class="form-group">
+                          <div class="col-sm-offset-3 col-sm-9">
+                                
+                              <button type="submit" class="btn btn-primary" (click)="updateRequestAlert()">Submit</button>&nbsp;  
+                              <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>&nbsp;
+                              <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal">Reset</button>
+                              
+                  
+                          </div>
+                    </div>
+              </form>
+        </div>
+      </div>
+      </div>
+    
+  </ng-template>
+  

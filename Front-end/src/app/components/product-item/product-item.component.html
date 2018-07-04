@@ -1,0 +1,88 @@
+<div class="container-fluid">
+<br><br>
+
+
+   <label >Item Name</label>
+   &nbsp;&nbsp;&nbsp;    
+    <label >Quantity available</label>
+    &nbsp;&nbsp;&nbsp;
+    <label>Description</label>  
+    
+
+  <div *ngFor="let item of productItemList" class="">
+    <div class="list-group">
+    <div class="list-group-item">
+    <div class="row">
+    
+    <div class="col-md-1">
+    {{item.itemname}}
+    </div>
+    <div class="col-md-1">
+      {{item. quantity}}
+    </div>
+    <div class="col-md-5">
+      {{item.description}}
+    </div>
+    <div class="col-md-1">
+       
+     <button type="button" (click)="showEditFrm(item)" class="btn btn-primary" [disabled]="toggleForm"data-toggle="tooltip" title="Edit item details"><i class="fa fa-edit"></i></button>
+    </div>
+    <div class="col-md-1">
+      <button type="button"  (click) ="deleteproduct(item._id)" value=" Delete " class="btn btn-danger"data-toggle="tooltip" title="Remove this item"><i class="fa fa-close"></i></button>
+      <br><br>
+    </div>
+    </div>
+  </div>
+</div>
+    
+  
+</div>
+</div>
+<div class="container-fluid" >
+
+  <form (submit) = "addItem()" *ngIf="!toggleForm"   >
+    <h2 class="page-header">Add Item</h2>
+
+    <div class="form-group">
+      <label>Item Name</label>
+      <input type="text" [(ngModel)]="itemname" name="itemname" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" [(ngModel)]="quantity" name="quantity" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" [(ngModel)]="description" name="description" class="form-control">
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Add">
+
+  </form>
+  </div>
+
+
+  <div class="container-fluid">
+  <form (submit) = "editproduct()"  *ngIf="toggleForm" >
+    <h2 class="page-header">Edit Product</h2>
+    <div class="form-group">
+      <label>Item Name</label>
+      <input type="text" [(ngModel)]="selectedItem.itemname" name="itemname" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Quantity</label>
+      <input type="number" [(ngModel)]="selectedItem.quantity" name="quantity" class="form-control">
+    </div>
+
+    <div class="form-group">
+      <label>Description</label>
+      <input type="text" [(ngModel)]="selectedItem.description" name="description" class="form-control">
+    </div>
+
+    <input type="submit" class="btn btn-success" value="Save">
+
+  </form>
+</div>

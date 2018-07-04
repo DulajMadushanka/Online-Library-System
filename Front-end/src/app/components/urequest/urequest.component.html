@@ -1,0 +1,83 @@
+<div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+    </div>
+<br><br>
+  <div style="width: 1350px;height: 1000px;margin-left: 50px">
+  <div class="row">
+    <div class="modal-header col-sm">
+      <div class="col-sm-2" >
+      </div>
+      <div class="col-sm-8">
+          <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Add Request Book Details</label></h4>
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-window-close fa-2x"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+      <!--modal body-->
+      <div class="row" >
+      <div class="modal-body" >
+            <form #itemForm = "ngForm" (ngSubmit) = "addRequest(itemForm)" *ngIf="!toggleForm"  class="form-horizontal">
+                  <input type="hidden" name="_id">
+
+                  <div class="form-group row">
+                        <label class="col-sm-3 control-label" style="margin-left: -120px">Student Name :</label>
+                        <div class="col-sm-9">
+                              <input class="form-control" type="text" name="s_name" ngModel required>
+                        </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Email :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="email" ngModel required>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Chategory :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="book_title" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Author :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="author" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Edition :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="edition" ngModel>
+                    </div>
+                   </div>
+                   <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Note :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="note" ngModel>
+                    </div>
+                   </div>
+                 
+                  
+              
+                
+                  <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                              
+                              <button type="submit" class="btn btn-primary" (click)="addRequestAlert()">Submit</button>
+                              <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>&nbsp;
+                              <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal">Reset</button>
+                        </div>
+                  </div>
+
+
+            </form>
+      </div>
+    </div>
+    </div>
+  
+

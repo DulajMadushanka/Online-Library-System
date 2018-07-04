@@ -1,0 +1,237 @@
+<hr>
+<div class="container">
+  <h1 style="font-size: 40pt;text-align: center;color: black"><b>Member Details</b></h1>
+
+  <div *ngFor="let alert of alerts">
+            <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+          </div>
+    
+    <div class="row" >
+          <div class="col-sm-4"></div>
+          <div class="input-group col-sm-4">
+                <input type="text" class="form-control" id="searchTextId" name="searchText" placeholder="Search By Name">
+                <span class="input-group-addon"><i class="fas fa-search"></i></span>
+          </div>
+    </div>
+      <hr>
+
+      <div class="row">
+            <div class="col-sm">
+            <table class="table table-hover table-striped table-condensed  table-sm" id="mytable" #content>
+                  <thead class="">
+                  <tr style="background-color: #85B3E9">
+                    <th>Student Name</th>
+                    <th>Email</th>
+                    <th>Id No</th>
+                    <th>Mobile</th>
+                    <th>Address</th>
+                    <th>Birthday</th>
+                    <th>Status</th> 
+                    <th>Action</th> 
+                   
+                  </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor = "let member of MemberList">
+                      <td>{{member.name}}</td>
+                      <td>{{member.email}}</td>
+                      <td>{{member.id_no}}</td>
+                      <td>{{member.mobile_no}}</td>
+                      <td>{{member.address}}</td>
+                      <td>{{member.birthday}}</td>
+                      <td>{{member.status}}</td>
+                     
+                        <button class='btn btn-danger' (click)="deleteMember(member._id);deleteMemberAlert()">
+                        <i class='fa fa-trash fa-lg'></i>Delete
+                        </button>
+          
+                        <button class='btn btn-success' id="mybutton" (click)="openEditModal(template1)" (click)="showEditForm(member)">
+                        <i class="fas fa-align-justify" ></i>View
+                        </button>
+                     
+                    </tr>
+                  </tbody>
+
+            </table>
+            
+            <button class='btn btn-success' id="mybutton" (click)="openModal(template)"><i class='fa fa-plus-square fa-lg'></i></button>
+      
+            </div>
+      </div>
+      
+</div>
+<!--add member-->
+<ng-template #template>
+  <div style="width: 1200px;margin-left: -199px">
+  <div class="row">
+    <div class="modal-header col-sm">
+      <div class="col-sm-2" >
+      </div>
+      <div class="col-sm-8">
+          <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Add Member Details</label></h4>
+      </div>
+      <div class="col-sm-2">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <i class="fas fa-window-close fa-2x"></i>
+        </button>
+      </div>
+
+    </div>
+  </div>
+      <!--modal body-->
+      <div class="row" >
+      <div class="modal-body" >
+            <form #itemForm = "ngForm" (ngSubmit) = "addMember(itemForm)" *ngIf="!toggleForm"  class="form-horizontal" >
+                  <input type="hidden" name="_id">
+
+                  <div class="form-group row">
+                        <label class="col-sm-3 control-label" style="margin-left: -120px">Student Name :</label>
+                        <div class="col-sm-9">
+                              <input class="form-control" type="text" name="name" ngModel required>
+                        </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Email :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="email" ngModel required>
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Id No :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="id_no" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Mobile :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="mobile_no" ngModel>
+                    </div>
+                  </div>
+                  <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Address :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="address" ngModel>
+                    </div>
+                   </div>
+                   <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Birthday :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="date" name="birthday" ngModel>
+                    </div>
+                   </div>
+                   <div class="form-group row">
+                    <label class="col-sm-3 control-label" style="margin-left: -120px">Status :</label>
+                    <div class="col-sm-9">
+                          <input class="form-control" type="text" name="status" ngModel>
+                    </div>
+                   </div>
+            
+                  <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-9">
+                              
+                              <button type="submit" class="btn btn-primary" (click)="addMemberAlert()">Submit</button>
+                              <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>&nbsp;
+                              <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal">Reset</button>
+                       
+                        </div>
+                  </div>
+
+
+            </form>
+      </div>
+    </div>
+    </div>
+  
+</ng-template>
+<!--update member-->
+<ng-template #template1>
+    <div style="width: 1200px;margin-left: -199px">
+    <div class="row">
+      <div class="modal-header col-sm">
+        <div class="col-sm-2" >
+        </div>
+        <div class="col-sm-8">
+            <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Edit Member Details</label></h4>
+        </div>
+        <div class="col-sm-2">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <i class="fas fa-window-close fa-2x"></i>
+          </button>
+        </div>
+  
+      </div>
+    </div>
+        
+        <div class="row" >
+        <div class="modal-body" >
+            
+              <form #updateForm = "ngForm" (ngSubmit) = "updateMember(updateForm)" class="form-horizontal" #conten>
+                    <input type="hidden" name="_id">
+  
+                    <div class="form-group row">
+                          <label class="col-sm-3 control-label" style="margin-left: -120px">Student Name :</label>
+                          <div class="col-sm-9">
+                                <input class="form-control" type="text" name="name"  [ngModel]="selectedMember.name" required>
+                          </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Email :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="email"  [ngModel]="selectedMember.email" required>
+                      </div>
+                    </div>
+                   
+                   
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Id No :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="id_no" [ngModel]="selectedMember.id_no">
+                      </div>
+                    </div>
+                    <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Mobile :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="mobile_no" [ngModel]="selectedMember.mobile_no">
+                      </div>
+                     </div>
+
+                     <div class="form-group row">
+                        <label class="col-sm-3 control-label" style="margin-left: -120px">Address :</label>
+                        <div class="col-sm-9">
+                              <input class="form-control" type="text" name="address" [ngModel]="selectedMember.address">
+                        </div>
+                     </div>
+                     <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Birthday :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="date" name="birthday" [ngModel]="selectedMember.birthday">
+                      </div>
+                     </div>
+                     <div class="form-group row">
+                      <label class="col-sm-3 control-label" style="margin-left: -120px">Status :</label>
+                      <div class="col-sm-9">
+                            <input class="form-control" type="text" name="status" [ngModel]="selectedMember.status">
+                      </div>
+                   </div>
+                     
+                    <div class="form-group">
+                          <div class="col-sm-offset-3 col-sm-9">
+                                
+                              <button type="submit" class="btn btn-primary" (click)="updateMemberAlert()">Submit</button>&nbsp;  
+                              <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>&nbsp;
+                              <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal">Reset</button>
+                              <button type="submit" class="btn btn-primary" (click)="downloadPDF()">PDF</button>
+                              
+                          </div>
+                    </div>
+              </form>
+        </div>
+      </div>
+      </div>
+    
+  </ng-template>
+
+  
+  

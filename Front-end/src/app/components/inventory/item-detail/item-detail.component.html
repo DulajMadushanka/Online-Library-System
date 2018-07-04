@@ -1,0 +1,224 @@
+<hr>
+<div class="container">
+    <div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClosed(alert)">{{ alert.msg }}</alert>
+    </div>
+    <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="input-group col-sm-4">
+                <input type="text" class="form-control" id="searchTextId" [(ngModel)]="searchText" name="searchText" placeholder="Search By Name">
+                <span class="input-group-addon"><i class="fas fa-search"></i></span>
+          </div>
+    </div>
+      <hr>
+
+      <div class="row">
+            <div class="col-sm">
+            <table class="table table-hover table-striped table-condensed  table-sm" id="mytable">
+                  <thead class="">
+                  <tr>
+                        <th>Item Code</th>
+                        <th>Name</th>
+                        <th>Category</th>
+                        <th>Unit</th>
+                        <th>ROL</th>
+                        <th>Quantity</th>
+                        <th>Actions</th>
+                  </tr>
+                  </thead>
+                  <tbody class="text-center">
+                  <tr *ngFor=" let item of items | itemFilter:searchText">
+                        <td>{{item._id}}</td>
+                        <td>{{item.itemname}}</td>
+                        <td>{{item.category}}</td>
+                        <td>{{item.unitScale}}</td>
+                        <td class="text-right">{{item.reOrderLevel}}
+                          <button type="button" class='btn btn-light-blue'(click)="onEdit1(item) ; openSetROLModal(template2)" tooltip="edit re-order level">
+                          <i class="fa fa-edit" aria-hidden="true"></i>
+                          </button>
+                        </td>
+                        <td class="text-right">{{item.quantity}}</td>
+                        <td>
+                              <button class='btn btn-info' (click)="onEdit(item) ; openModal(template)">
+                              <i class="fa fa-edit" aria-hidden="true"></i>Edit
+                              </button>
+
+                              <button class='btn btn-danger' (click)="onDelete(item._id, itemDetailForm)">
+                              <i class='fa fa-trash fa-lg'></i>Delete
+                              </button>
+
+                              <button class='btn btn-success'>
+                              <i class="fas fa-align-justify"></i>View
+                              </button>
+                        </td>
+                        </tr>
+                  </tbody>
+
+            </table>
+            <button class='btn btn-success' id="mybutton" (click)="openModal(template)"><i class='fa fa-plus-square fa-lg'></i></button>
+            <script>
+             $(document).ready(function() {
+                $('#mytable').DataTable();
+            });
+            </script>
+            <!-- Modal for the add Item-->
+            <ng-template #template>
+              <div class="row">
+                <div class="modal-header col-sm">
+                  <div class="col-sm-2">
+                  </div>
+                  <div class="col-sm-8">
+                      <h4 class="modal-title pull-center" id="myModalLabel"><br><i class="fas fa-plus-square fa-3x"></i><label id="modId"> Add New Item</label></h4>
+                  </div>
+                  <div class="col-sm-2">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+                    <i class="fas fa-window-close fa-2x"></i>
+                    </button>
+                  </div>
+
+                </div>
+              </div>
+                  <!--modal body-->
+                  <div class="row">
+                  <div class="modal-body">
+                        <form class="form-horizontal" #itemDetailForm = "ngForm" (ngSubmit)="onSubmit(itemDetailForm)">
+                              <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem._id">
+
+                              <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Name:</label>
+                                    <div class="col-sm-9">
+                                          <input class="form-control" type="text" name="itemname" value="" id="name" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.itemname" required>
+                                    </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Item Code:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="text" name="itemCode" value="" id="itemcode" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.itemCode" required>
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Category:</label>
+                                    <div class="col-sm-9">
+                                                <select class="form-control" type="text" id="category" name="category" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.category">
+                                                      <option>Rice</option>
+                                                      <option>Vegitable</option>
+                                                      <option>Fruite</option>
+                                                </select>
+                                    </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Quantity:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="text" name="quantity" value="" id="quantity" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.quantity">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Description:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="text" name="description" value="" id="descripiton" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.description">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">LUDate:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="date" name="latestUpdate" value="" id="date" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.latestUpdate">
+                                </div>
+                               </div>
+                              <div class="form-group row">
+                                    <label class="col-sm-3 control-label pull-left">UnitScale:</label>
+                                    <div class="col-sm-9">
+                                                <select class="form-control" type="text" name="unitScale" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.unitScale">
+                                                      <option>kg</option>
+                                                      <option>liter</option>
+                                                      <option value=""></option>
+                                                </select>
+                                    </div>
+                              </div>
+                              <div class="form-group row">
+                                    <label class="col-sm-3 control-label">UnitCost:</label>
+                                    <div class="col-sm-9">
+                                          <input class="form-control" type="text" name="unitCost" value="" id="unitCost" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.unitCost">
+                                    </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Minimum Level:</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" type="text" name="minimumLevel" value="" id="minimumLevel" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.minimumLevel">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                    <label class="col-sm-3 control-label">Re Order Level:</label>
+                                    <div class="col-sm-9">
+                                          <input class="form-control" type="text" name="reOrderLevel" value="" id="reOrderLevel" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.reOrderLevel">
+                                    </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Maximum Level:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="text" name="maximumLevel" value="" id="maximumLevel" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.maximumLevel">
+                                </div>
+                              </div>
+                              <div class="form-group row">
+                                <label class="col-sm-3 control-label">Date:</label>
+                                <div class="col-sm-9">
+                                      <input class="form-control" type="date" name="date" value="" id="date" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.date">
+                                </div>
+                               </div>
+                              <div class="form-group">
+                                    <div class="col-sm-offset-3 col-sm-9">
+                                          <button type="submit" class="btn btn-primary" [disabled]="!itemForm.valid" (click)="modalRef.hide() ; addItemAlert()">Submit</button>
+                                          <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>
+                                          <button type="button" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="resetForm(itemDetailForm)">Reset</button>
+                                    </div>
+                              </div>
+                        </form>
+                  </div>
+                </div>
+            </ng-template>
+
+                  <!--Modal for the edit re oder level-->
+                  <ng-template #template2>
+                    <div class="modal-header">
+                          <h4 class="modal-title pull-left" id="myModalLabel"><i class="fas fa-caret-square-down fa-2x"></i><label> Add Item Here</label></h4>
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="modalRef.hide()">
+                                <span aria-hidden="true">&times;</span>
+                          </button>
+                    </div>
+                    <!--modal body-->
+                    <div class="modal-body">
+                          <form class="form-horizontal" #setROLForm = "ngForm" (ngSubmit)="onSubmit(setROLForm)">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem._id">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.itemCode">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.category">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.quantity">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.description">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.latestUpdate">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.unitScale">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.unitCost">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.minimumLevel">
+
+                                <div class="form-group row">
+                                  <label class="col-sm-4 control-label">New Re Order Level:</label>
+                                  <div class="col-sm-8">
+                                    <input class="form-control" type="text" name="reOrderLevel" value="" id="reOrderLevel" #name="ngModel" [(ngModel)]="itemDetailService.selectedItem.reOrderLevel" required>
+                                  </div>
+                                </div>
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.maximumLevel">
+                                <input type="hidden" name="_id" #_id="ngModel" [(ngModel)]="itemDetailService.selectedItem.date">
+
+                                <div class="form-group">
+                                  <div class="col-sm-offset-3 col-sm-9">
+                                        <button type="submit" class="btn btn-primary" [disabled]="!itemForm.valid" (click)="modalRef.hide() ;">Submit</button>
+                                        <button type="submit" class="btn btn-warning" id="cancelbutton" data-toggle="modal" data-target="#myModal" (click)="modalRef.hide()">Cancel</button>
+                                  </div>
+                            </div>
+
+                            </form>
+                        </div>
+                    </ng-template>
+
+            </div>
+      </div>
+      <app-set-rol></app-set-rol>
+</div>
+

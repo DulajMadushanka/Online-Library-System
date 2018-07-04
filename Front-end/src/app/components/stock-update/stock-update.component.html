@@ -1,0 +1,137 @@
+
+<div class="a">
+    <br><br>
+<div class="container-fluid">
+
+  <form #itemForm1 = "ngForm" class="form-horizontal">
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" >Stock Update on:</label>
+      <div class="col-sm-6">
+        <input type="date" name="latestUpdate" [(ngModel)]="latestUpdate" class="form-control"  >
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" >Item Code:</label>
+      <div class="col-sm-6">
+        <input type="text" name="itemCode" [(ngModel)]="itemCode" class="form-control"  placeholder="Enter Item Code">
+      </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-sm-2" >Item Name:</label>
+      <div class="col-sm-6">
+        <input type="text" [(ngModel)]="itemname" class="form-control" placeholder="Enter Item Name">
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label class="control-label col-sm-2" >vendor prices:</label>
+    </div>
+
+  </form>
+</div>
+
+
+<div class="container-fluid" >
+  <div class="col-sm-offset-1 col-sm-8">
+    <table id="mytable" class=" table order-list" >
+      <thead>
+        <tr>
+          <td>Vendor ID</td>
+          <td>Quantity</td>
+          <td>Total price(Rs)</td>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="col-sm-4">
+              <input type="text" name="id" class="form-control" />
+          </td>
+          <td class="col-sm-4">
+              <input type="number" id="totalQuantity"  class="form-control"/>
+          </td>
+          <td class="col-sm-3">
+              <input type="number" id="price"  class="form-control"/>
+          </td>
+          <td class="col-sm-2"><a class="deleteRow"></a></td>
+        </tr>
+      </tbody>
+    </table>
+    &nbsp; &nbsp;
+    <div class="col-sm-offset-7 col-sm-8">
+
+      <button id="addRow" type="submit" onclick="addRow()" class="btn btn-primary" data-toggle="tooltip" title="Add vendor"><i class="fa fa-plus"></i></button>
+      &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+
+      <button type="submit" onclick="getSum()" class="btn btn-success"data-toggle="tooltip" title="Calculate average unit price"><i class="fa fa-location-arrow"></i></button>
+    </div>
+  </div>
+</div>
+
+<br><br>
+
+
+<div class="container-fluid">
+  <form #itemForm2 = "ngForm" class="form-horizontal">
+    <div class="form-group">
+      <label class="control-label col-sm-2" >Average unit price:</label>
+      <div class="col-sm-6">
+        <input type="text" class="form-control" id="unitCost" name="unitCost" [(ngModel)]="unitCost" placeholder="Average Unit Price">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-sm-2" >Total Quantity:</label>
+      <div class="col-sm-6">
+        <input type="number" class="form-control" id="quantity" name="quantity" [(ngModel)]="quantity" placeholder="Total Quantity">
+      </div>
+    </div>
+
+    <!--...!-->
+    <div class="col-sm-offset-7 col-sm-8">
+      <button type="submit" (click)="getItembyCode(itemForm1,itemForm2 )" class="btn btn-success"data-toggle="tooltip" title="Add this item to the list"><i class="fa fa-plus"></i></button>
+    </div>
+  </form>
+</div>
+
+<br><br>
+<div class="col-sm-2">
+    <label >Item Name</label>
+  </div>
+  <div class="col-sm-2">
+    <label >Quantity available</label>
+  </div>
+  <div class="col-sm-2">
+    <label>unit Cost(Rs.)</label>
+  </div>
+
+<br><br>
+
+<div *ngFor="let item of stockItemList" class="">
+  <div class="list-group">
+  <div class="list-group-item">
+  <div class="row">
+
+  <div class="col-sm-2">
+  {{item.itemname}}
+  </div>
+  <div class="col-sm-2">
+    {{quantity}}
+  </div>
+  <div class="col-sm-2">
+    {{item.unitCost}}
+  </div>
+  <div class="col-md-1">
+
+   <!--button type="button" (click)="showEditFrm(item)" class="btn btn-primary" [disabled]="toggleForm"data-toggle="tooltip" title="Edit item details"><i class="fa fa-edit"></i></button-->
+  </div>
+  <div class="col-md-1">
+    <!--button type="button"  (click) ="deleteproduct(item._id)" value=" Delete " class="btn btn-danger"data-toggle="tooltip" title="Remove this item"><i class="fa fa-close"></i></button-->
+    <br><br>
+  </div>
+  </div>
+</div>
+</div>
+</div>
+
